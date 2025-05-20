@@ -2,3 +2,4 @@
 .terraform.lock.hcl
 *jenkins-key-server.pem.terraform/
 jenkinServer/jenkins-key-server.pem
+jenkinServer/.terraform/
