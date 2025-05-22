@@ -30,9 +30,6 @@ module "vpc" {
   }
 }
 
-#─────────────────────────────────────────────────────────────────────────────
-# 1) EKS cluster module (no map_users here)
-#─────────────────────────────────────────────────────────────────────────────
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.36.0"
@@ -54,24 +51,21 @@ module "eks" {
     }
   }
 
+  manage_aws_auth_configmap = false # this disables the default aws-auth config
+
   tags = {
     Environment = "dev"
     Terraform   = "true"
   }
 }
 
-#─────────────────────────────────────────────────────────────────────────────
-# 2) aws-auth sub-module (v20.36.0) to map IAM identities into RBAC
-#─────────────────────────────────────────────────────────────────────────────
 module "eks_aws_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
   version = "~> 20.36.0"
 
-  cluster_name                       = module.eks.cluster_name
-  cluster_endpoint                   = module.eks.cluster_endpoint
-  cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
+  manage_aws_auth_configmap = true
 
-  map_users = [
+  aws_auth_users = [
     {
       userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
       username = "kenaiboy"
