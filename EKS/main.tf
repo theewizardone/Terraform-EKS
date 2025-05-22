@@ -51,8 +51,6 @@ module "eks" {
     }
   }
 
-  manage_aws_auth_configmap = false # this disables the default aws-auth config
-
   tags = {
     Environment = "dev"
     Terraform   = "true"
@@ -63,8 +61,6 @@ module "eks_aws_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
   version = "~> 20.36.0"
 
-  manage_aws_auth_configmap = true
-
   aws_auth_users = [
     {
       userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
@@ -73,3 +69,4 @@ module "eks_aws_auth" {
     }
   ]
 }
+
