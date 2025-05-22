@@ -67,12 +67,10 @@ module "eks_aws_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
   version = "~> 20.36.0"
 
-  # Required cluster info outputs from the main module
   cluster_name                       = module.eks.cluster_name
   cluster_endpoint                   = module.eks.cluster_endpoint
   cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
 
-  # Grant the Jenkins IAM user full admin access
   map_users = [
     {
       userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
