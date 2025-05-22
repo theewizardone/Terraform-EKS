@@ -35,7 +35,7 @@ module "vpc" {
 #─────────────────────────────────────────────────────────────────────────────
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+  version = "~> 20.36"
 
   cluster_name    = "my-eks-cluster"
   cluster_version = "1.31"
@@ -65,7 +65,7 @@ module "eks" {
 #─────────────────────────────────────────────────────────────────────────────
 module "eks_aws_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "~> 20.36.0"
+  version = "~> 20.36"
 
   # Required cluster info outputs from the main module
   cluster_name                       = module.eks.cluster_name
