@@ -3,6 +3,8 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
 
+  cluster_endpoint_public_access = true
+
   name            = "jenkins-vpc"
   cidr            = var.vpc_cidr
   azs             = data.aws_availability_zones.azs.names
