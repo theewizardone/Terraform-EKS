@@ -30,7 +30,9 @@ module "vpc" {
   }
 }
 
-# EKS Module
+#─────────────────────────────────────────────────────────────────────────────
+# 1) Your EKS cluster module (no more map_users here)
+#─────────────────────────────────────────────────────────────────────────────
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -38,11 +40,10 @@ module "eks" {
   cluster_name    = "my-eks-cluster"
   cluster_version = "1.31"
 
- cluster_endpoint_public_access = true
+  cluster_endpoint_public_access = true
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
-
 
   eks_managed_node_groups = {
     nodes = {
@@ -52,7 +53,24 @@ module "eks" {
       desired_size   = 2
     }
   }
-  # Ensure the Jenkins IAM user can authenticate as cluster-admin
+
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+  }
+}
+
+#─────────────────────────────────────────────────────────────────────────────
+# 2) The aws-auth sub-module for mapping IAM into Kubernetes RBAC
+#─────────────────────────────────────────────────────────────────────────────
+module "eks_aws_auth" {
+  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "~> 20.0"
+
+  cluster_name                  = module.eks.cluster_name
+  cluster_endpoint              = module.eks.cluster_endpoint
+  cluster_certificate_authority = module.eks.cluster_certificate_authority_data
+
   map_users = [
     {
       userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
@@ -60,9 +78,4 @@ module "eks" {
       groups   = ["system:masters"]
     }
   ]
-
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
 }
