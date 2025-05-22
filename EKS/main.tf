@@ -52,6 +52,14 @@ module "eks" {
       desired_size   = 2
     }
   }
+  # Ensure the Jenkins IAM user can authenticate as cluster-admin
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
+      username = "kenaiboy"
+      groups   = ["system:masters"]
+    }
+  ]
 
   tags = {
     Environment = "dev"
