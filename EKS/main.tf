@@ -57,16 +57,3 @@ module "eks" {
   }
 }
 
-module "eks_aws_auth" {
-  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "~> 20.36.0"
-
-  aws_auth_users = [
-    {
-      userarn  = "arn:aws:iam::522585361427:user/kenaiboy"
-      username = "kenaiboy"
-      groups   = ["system:masters"]
-    }
-  ]
-}
-
