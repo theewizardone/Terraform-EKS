@@ -35,7 +35,7 @@ module "vpc" {
 #─────────────────────────────────────────────────────────────────────────────
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.36"
+  version = "~> 20.36.0"
 
   cluster_name    = "my-eks-cluster"
   cluster_version = "1.31"
@@ -47,7 +47,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     nodes = {
-      instance_types = ["t2.small"]
+      instance_types = ["t2.medium"]
       min_size       = 1
       max_size       = 5
       desired_size   = 2
@@ -65,7 +65,7 @@ module "eks" {
 #─────────────────────────────────────────────────────────────────────────────
 module "eks_aws_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "~> 20.36"
+  version = "~> 20.36.0"
 
   # Required cluster info outputs from the main module
   cluster_name                       = module.eks.cluster_name
