@@ -6,6 +6,9 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials("AWS_SECRET_ACCESS_KEY")
         AWS_DEFAULT_REGION    = "us-east-1"
         action = "apply" // or "destroy"
+         GOGC = '50'         // Lower garbage collection threshold
+        GOMAXPROCS = '2'    // Limit number of Go threads
+        TF_LOG = 'INFO'     // Optional: set to 'DEBUG' for full Terraform trace
     }
 
     stages {
