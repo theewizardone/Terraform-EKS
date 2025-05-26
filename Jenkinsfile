@@ -81,8 +81,8 @@ pipeline {
                         kubectl get nodes
 
                         # Apply deployment and service
-                        kubectl apply -f nginx-deployment.yaml
-                        kubectl apply -f nginx-service.yaml
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
                     '''
                 }
             }
