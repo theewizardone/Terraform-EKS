@@ -51,12 +51,6 @@ pipeline {
             }
         }
 
-        stage('Approval to proceed') {
-            steps {
-                input message: 'Are you sure you want to proceed?', ok: 'Proceed'
-            }
-        }
-
         stage('Apply/Destroy Terraform') {
             steps {
                 dir('EKS') {
