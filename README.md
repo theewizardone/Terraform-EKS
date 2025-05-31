@@ -1,0 +1,1 @@
+A Terraform and EKS project involves using Terraform, an Infrastructure as Code (IaC) tool, to automate the provisioning of an Amazon EKS (Elastic Kubernetes Service) cluster on AWS. The project typically defines resources like VPCs, subnets, IAM roles, security groups, and the EKS cluster itself using Terraform scripts.
